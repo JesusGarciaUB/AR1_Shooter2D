@@ -60,6 +60,8 @@ public class Photon_Manager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("Me he unido a una sala super chevere llamada : " + PhotonNetwork.CurrentRoom.Name + " con " + PhotonNetwork.CurrentRoom.PlayerCount + " jugadores.");
+        //TOREMOVE
+        Network_Manager._NETWORK_MANAGER.AskForStats(Player_Stats.stats.PlayerName);
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)

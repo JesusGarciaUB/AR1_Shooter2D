@@ -35,6 +35,8 @@ public class LoginScreen : MonoBehaviour
 
     private void Clicked()
     {
+        Debug.Log(loginText.text.ToString());
+        Debug.Log(passwordText.text.ToString());
         Network_Manager._NETWORK_MANAGER.ConnectToServer(loginText.text.ToString(), passwordText.text.ToString());
     }
 

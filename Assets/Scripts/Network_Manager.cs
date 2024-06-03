@@ -24,7 +24,7 @@ public class Network_Manager : MonoBehaviour
     private StreamReader reader;
     private bool connected = false;
 
-    const string host = "10.40.1.178";
+    const string host = "192.168.1.102";
     const int port = 6346;
 
     private void Awake()
@@ -72,6 +72,7 @@ public class Network_Manager : MonoBehaviour
             }
 
             main.SetActive(true);
+            AskForStats(Player_Stats.stats.PlayerName);
         }
 
         if (data == "LoginFALSE")
@@ -93,6 +94,18 @@ public class Network_Manager : MonoBehaviour
             failedRegister.gameObject.SetActive(true);
             failedRegister.text = "Username already exists";
         }
+
+        if (data[0] == '9')
+        {
+            string[] toSplit = data.Split('/');
+            Player_Stats.stats.DuckRace = int.Parse(toSplit[1]);
+            Player_Stats.stats.Health = int.Parse(toSplit[3]);
+            Player_Stats.stats.Damage = int.Parse(toSplit[4]);
+            Player_Stats.stats.MoveSpeed = int.Parse(toSplit[5]);
+            Player_Stats.stats.JumpForce = int.Parse(toSplit[6]);
+            Player_Stats.stats.ShootSpeed = int.Parse(toSplit[7]);
+        }
+        Debug.Log(data);
     }
 
     private void Update()
@@ -116,7 +129,7 @@ public class Network_Manager : MonoBehaviour
         {
             writer.WriteLine("0" + "/" + nick + "/" + password);
             writer.Flush();
-
+            Player_Stats.stats.PlayerName = nick;
         }
         catch (Exception ex)
         {
@@ -132,6 +145,22 @@ public class Network_Manager : MonoBehaviour
         try
         {
             writer.WriteLine("2" + "/" + user + "/" + password + "/" + race);
+            writer.Flush();
+        }
+        catch (Exception ex)
+        {
+            Debug.LogException(ex);
+            connected = false;
+            throw;
+        }
+    }
+
+    public void AskForStats(string user)
+    {
+        Debug.Log("Asking");
+        try
+        {
+            writer.WriteLine("3");
             writer.Flush();
         }
         catch (Exception ex)

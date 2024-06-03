@@ -12,10 +12,10 @@ public class Game_Manager : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.Instantiate("Player", spawnPlayer1.transform.position, Quaternion.identity);
+            PhotonNetwork.Instantiate("Player" + Player_Stats.stats.DuckRace, spawnPlayer1.transform.position, Quaternion.identity);
         } else
         {
-            PhotonNetwork.Instantiate("Player", spawnPlayer2.transform.position, Quaternion.identity);
+            PhotonNetwork.Instantiate("Player" + Player_Stats.stats.DuckRace, spawnPlayer2.transform.position, Quaternion.identity);
         }
     }
 }
